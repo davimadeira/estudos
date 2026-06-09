@@ -912,5 +912,44 @@ input:focus, select:focus, textarea:focus {
     
     .materias-grid {
         grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    }
+    }/* OVERLAY DE BLOQUEIO */
+.block-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    z-index: 10000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.block-card {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 1.5rem;
+    text-align: center;
+    max-width: 450px;
+    width: 90%;
+    box-shadow: var(--shadow-xl);
+    border: 1px solid var(--border);
+}
+
+.block-card h2 {
+    margin: 1rem 0 0.5rem;
+    color: var(--text-primary);
+}
+
+.block-card p {
+    color: var(--text-secondary);
+    margin-bottom: 1.5rem;
+}
+
+.block-card button {
+    width: 100%;
+    margin-bottom: 0.8rem;
+}
 }
