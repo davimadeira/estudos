@@ -539,4 +539,28 @@ async function init() {
     }
 }
 
+// Função para login com Google
+function fazerLoginGoogle() {
+    console.log('Login Google iniciado');
+    auth.signInWithPopup(googleProvider)
+        .then((result) => {
+            handleUserLogin(result.user);
+        })
+        .catch((error) => {
+            console.error('Erro:', error);
+            alert('Erro ao fazer login: ' + error.message);
+        });
+}
+
+// Função para abrir modal de email
+function abrirModalEmail() {
+    console.log('Abrindo modal de email');
+    const modal = document.getElementById('emailLoginModal');
+    if (modal) {
+        modal.style.display = 'flex';
+    } else {
+        console.error('Modal não encontrado');
+        alert('Erro ao abrir modal de login');
+    }
+}
 init();
