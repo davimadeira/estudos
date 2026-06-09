@@ -11,8 +11,7 @@
 </head>
 <body>
 
-<!-- TELA DE BOAS-VINDAS / LOGIN OBRIGATÓRIO -->
-<!-- TELA DE BOAS-VINDAS / LOGIN OBRIGATÓRIO -->
+<!-- TELA DE BOAS-VINDAS -->
 <div id="welcomeScreen" class="welcome-screen">
     <div class="welcome-card">
         <div class="welcome-icon">
@@ -20,11 +19,11 @@
         </div>
         <h1>Bem-vindo ao Ekklesia Study</h1>
         <p>Sua plataforma de estudos teológicos</p>
-        <button id="welcomeLoginBtn" class="btn-primary btn-large" onclick="fazerLoginGoogle()">
+        <button id="welcomeLoginBtn" class="btn-primary btn-large">
             <i class="fab fa-google"></i> Entrar com Google
         </button>
-        <button onclick="alert('Botão funcionou!'); document.getElementById('emailLoginModal').style.display='flex';" style="background: red; color: white; padding: 10px;">
-            TESTE - Clique aqui
+        <button id="welcomeEmailBtn" class="btn-outline btn-large">
+            <i class="fas fa-envelope"></i> Entrar com E-mail
         </button>
         <p class="welcome-footer">Crie sua conta e acompanhe seu progresso</p>
     </div>
@@ -38,11 +37,9 @@
             <button class="close-modal">&times;</button>
         </div>
         <div class="modal-body">
-            <form id="emailLoginForm">
-                <input type="email" id="loginEmail" placeholder="seu@email.com" required>
-                <input type="password" id="loginPassword" placeholder="Senha" required>
-                <button type="submit" class="btn-primary">Entrar</button>
-            </form>
+            <input type="email" id="loginEmail" placeholder="seu@email.com">
+            <input type="password" id="loginPassword" placeholder="Senha">
+            <button id="submitLoginBtn" class="btn-primary">Entrar</button>
             <div class="divider">ou</div>
             <button id="showRegisterBtn" class="btn-outline">Criar nova conta</button>
         </div>
@@ -57,20 +54,17 @@
             <button class="close-modal">&times;</button>
         </div>
         <div class="modal-body">
-            <form id="registerForm">
-                <input type="text" id="registerName" placeholder="Nome completo" required>
-                <input type="email" id="registerEmail" placeholder="E-mail" required>
-                <input type="password" id="registerPassword" placeholder="Senha (mínimo 8 caracteres, letras e números)" required>
-                <input type="password" id="registerConfirmPassword" placeholder="Confirmar senha" required>
-                <button type="submit" class="btn-primary">Cadastrar</button>
-            </form>
+            <input type="text" id="registerName" placeholder="Nome completo">
+            <input type="email" id="registerEmail" placeholder="E-mail">
+            <input type="password" id="registerPassword" placeholder="Senha (min 8 caracteres)">
+            <input type="password" id="registerConfirmPassword" placeholder="Confirmar senha">
+            <button id="submitRegisterBtn" class="btn-primary">Cadastrar</button>
         </div>
     </div>
 </div>
 
-<!-- APP PRINCIPAL (só aparece após login) -->
+<!-- APP PRINCIPAL -->
 <div id="appContainer" class="app-container" style="display: none;">
-    <!-- MENU LATERAL -->
     <aside class="sidebar">
         <div class="logo">
             <i class="fas fa-church"></i>
@@ -92,8 +86,6 @@
             </div>
         </div>
     </aside>
-
-    <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
         <header class="top-header">
             <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
@@ -108,48 +100,6 @@
         </header>
         <div class="content-area" id="contentArea"></div>
     </main>
-</div>
-
-<!-- MODAL PERSONALIZAR CRONOGRAMA -->
-<div id="personalizarModal" class="modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h3>Personalizar Cronograma</h3>
-            <button class="close-modal">&times;</button>
-        </div>
-        <div class="modal-body">
-            <label>📅 Data de início dos estudos</label>
-            <input type="date" id="dataInicio" value="2024-01-01">
-            <label>⏱️ Quantos dias por semana?</label>
-            <select id="cronoDiasPorSemana">
-                <option value="1">1 dia/semana</option><option value="2">2 dias/semana</option>
-                <option value="3">3 dias/semana</option><option value="4" selected>4 dias/semana</option>
-                <option value="5">5 dias/semana</option><option value="6">6 dias/semana</option>
-                <option value="7">7 dias/semana</option>
-            </select>
-            <label>📆 Quais dias da semana?</label>
-            <div id="diasSemanaCheckbox" class="dias-checkbox">
-                <label><input type="checkbox" value="0"> Dom</label>
-                <label><input type="checkbox" value="1"> Seg</label>
-                <label><input type="checkbox" value="2"> Ter</label>
-                <label><input type="checkbox" value="3"> Qua</label>
-                <label><input type="checkbox" value="4"> Qui</label>
-                <label><input type="checkbox" value="5"> Sex</label>
-                <label><input type="checkbox" value="6"> Sáb</label>
-            </div>
-            <div id="diasAlert" class="alert-error" style="display: none;"></div>
-            <label>⏰ Tempo por dia de estudo:</label>
-            <select id="cronoTempoPorDia">
-                <option value="30">30 minutos (1 matéria/dia)</option>
-                <option value="60" selected>1 hora (2 matérias/dia)</option>
-                <option value="90">1h30 (3 matérias/dia)</option>
-                <option value="120">2 horas (4 matérias/dia)</option>
-                <option value="150">2h30 (5 matérias/dia)</option>
-                <option value="180">3 horas (6 matérias/dia)</option>
-            </select>
-            <button id="salvarPersonalizacao" class="btn-primary">Salvar</button>
-        </div>
-    </div>
 </div>
 
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
