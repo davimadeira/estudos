@@ -1,0 +1,207 @@
+{
+  "materias": [
+    "Bibliologia",
+    "Hermenêutica",
+    "História da Bíblia",
+    "Pneumatologia",
+    "Cristologia",
+    "Teologia Sistemática",
+    "Homilética",
+    "Pregação",
+    "Missiologia",
+    "Teologia Pastoral"
+  ],
+
+  "conteudos": [
+    {
+      "id": 1,
+      "materia": "Bibliologia",
+      "titulo": "Introdução à Bibliologia",
+      "assunto": "Introdução",
+      "dificuldade": "Fácil",
+      "video": "https://www.youtube.com/embed/ID_DO_VIDEO_AQUI",
+      "pdf": "https://seusite.com/pdfs/introducao-bibliologia.pdf",
+      "texto": "A Bibliologia é o estudo da Bíblia como revelação divina, sua origem, transmissão, canonicidade e autoridade. Esta disciplina é fundamental para a compreensão da fé cristã.",
+      "link": "https://pt.wikipedia.org/wiki/Bibliologia",
+      "duracao": 45,
+      "ordem": 1
+    },
+    {
+      "id": 2,
+      "materia": "Bibliologia",
+      "titulo": "O Cânon Bíblico",
+      "assunto": "Cânon",
+      "dificuldade": "Médio",
+      "video": "https://www.youtube.com/embed/ID_DO_VIDEO_AQUI",
+      "pdf": "https://seusite.com/pdfs/canon-biblico.pdf",
+      "texto": "O cânon bíblico é a lista oficial dos livros considerados inspirados por Deus. O Antigo Testamento possui 39 livros no cânon protestante, enquanto o Novo Testamento tem 27 livros.",
+      "link": "https://pt.wikipedia.org/wiki/C%C3%A2non_b%C3%ADblico",
+      "duracao": 50,
+      "ordem": 2
+    },
+    {
+      "id": 3,
+      "materia": "Hermenêutica",
+      "titulo": "Princípios de Interpretação Bíblica",
+      "assunto": "Interpretação",
+      "dificuldade": "Médio",
+      "video": "https://www.youtube.com/embed/ID_DO_VIDEO_AQUI",
+      "pdf": "https://seusite.com/pdfs/hermeneutica-principios.pdf",
+      "texto": "A hermenêutica ensina as regras e métodos para interpretar corretamente as Escrituras. O princípio fundamental é a interpretação literal, gramatical e histórico-contextual.",
+      "link": "https://pt.wikipedia.org/wiki/Hermen%C3%AAutica",
+      "duracao": 60,
+      "ordem": 1
+    },
+    {
+      "id": 4,
+      "materia": "Hermenêutica",
+      "titulo": "Contexto Histórico e Cultural",
+      "assunto": "Contexto",
+      "dificuldade": "Difícil",
+      "video": "https://www.youtube.com/embed/ID_DO_VIDEO_AQUI",
+      "pdf": "https://seusite.com/pdfs/contexto-historico.pdf",
+      "texto": "Entender o contexto histórico, geográfico e cultural da época bíblica é essencial para uma exegese correta e para evitar anacronismos interpretativos.",
+      "link": "https://pt.wikipedia.org/wiki/Exegese",
+      "duracao": 55,
+      "ordem": 2
+    },
+    {
+      "id": 5,
+      "materia": "Pneumatologia",
+      "titulo": "A Pessoa do Espírito Santo",
+      "assunto": "Trindade",
+      "dificuldade": "Médio",
+      "video": "https://www.youtube.com/embed/ID_DO_VIDEO_AQUI",
+      "pdf": "https://seusite.com/pdfs/espirito-santo-pessoa.pdf",
+      "texto": "O Espírito Santo é a terceira pessoa da Trindade, co-igual e co-eterno com o Pai e o Filho. Possui personalidade, vontade, inteligência e emoções.",
+      "link": "https://pt.wikipedia.org/wiki/Esp%C3%ADrito_Santo",
+      "duracao": 50,
+      "ordem": 1
+    },
+    {
+      "id": 6,
+      "materia": "Pneumatologia",
+      "titulo": "Os Dons do Espírito Santo",
+      "assunto": "Dons Espirituais",
+      "dificuldade": "Difícil",
+      "video": "https://www.youtube.com/embed/ID_DO_VIDEO_AQUI",
+      "pdf": "https://seusite.com/pdfs/dons-espirituais.pdf",
+      "texto": "Os dons espirituais são capacitações sobrenaturais concedidas pelo Espírito Santo para edificação da igreja. Eles incluem dons de palavra, poder e revelação.",
+      "link": "https://pt.wikipedia.org/wiki/Dons_espirituais",
+      "duracao": 60,
+      "ordem": 2
+    },
+    {
+      "id": 7,
+      "materia": "Cristologia",
+      "titulo": "A Divindade de Cristo",
+      "assunto": "Divindade",
+      "dificuldade": "Médio",
+      "video": "https://www.youtube.com/embed/ID_DO_VIDEO_AQUI",
+      "pdf": "https://seusite.com/pdfs/divindade-cristo.pdf",
+      "texto": "Jesus Cristo é plenamente Deus, co-igual ao Pai. As Escrituras afirmam sua divindade através de títulos, atributos, obras e adoração recebida.",
+      "link": "https://pt.wikipedia.org/wiki/Cristologia",
+      "duracao": 55,
+      "ordem": 1
+    },
+    {
+      "id": 8,
+      "materia": "Cristologia",
+      "titulo": "Encarnação e Humanidade de Cristo",
+      "assunto": "Encarnação",
+      "dificuldade": "Difícil",
+      "video": "https://www.youtube.com/embed/ID_DO_VIDEO_AQUI",
+      "pdf": "https://seusite.com/pdfs/encarnacao-cristo.pdf",
+      "texto": "A encarnação é o mistério do Verbo que se fez carne. Jesus é verdadeiro Deus e verdadeiro homem, possuindo duas naturezas em uma só pessoa.",
+      "link": "https://pt.wikipedia.org/wiki/Encarna%C3%A7%C3%A3o",
+      "duracao": 65,
+      "ordem": 2
+    }
+  ],
+
+  "questoes": [
+    {
+      "id": 1,
+      "materia": "Bibliologia",
+      "assunto": "Introdução",
+      "pergunta": "O que significa a palavra 'Bibliologia'?",
+      "alternativas": [
+        "Estudo da Igreja",
+        "Estudo da Bíblia",
+        "Estudo de Deus",
+        "Estudo do Espírito Santo"
+      ],
+      "correta": 1,
+      "banca": "FCC",
+      "dificuldade": "Fácil",
+      "explicacao": "Bibliologia vem do grego 'biblion' (livro) e 'logos' (estudo), significando o estudo da Bíblia."
+    },
+    {
+      "id": 2,
+      "materia": "Bibliologia",
+      "assunto": "Cânon",
+      "pergunta": "Quantos livros tem o cânon protestante do Antigo Testamento?",
+      "alternativas": ["27", "39", "66", "73"],
+      "correta": 1,
+      "banca": "CESPE",
+      "dificuldade": "Médio",
+      "explicacao": "O cânon protestante do Antigo Testamento possui 39 livros."
+    },
+    {
+      "id": 3,
+      "materia": "Hermenêutica",
+      "assunto": "Interpretação",
+      "pergunta": "Qual o princípio básico da hermenêutica?",
+      "alternativas": [
+        "Interpretação espiritual",
+        "Interpretação literal e contextual",
+        "Interpretação alegórica",
+        "Interpretação mística"
+      ],
+      "correta": 1,
+      "banca": "FCC",
+      "dificuldade": "Médio",
+      "explicacao": "O princípio básico é a interpretação literal, gramatical e histórico-contextual das Escrituras."
+    },
+    {
+      "id": 4,
+      "materia": "Pneumatologia",
+      "assunto": "Trindade",
+      "pergunta": "O Espírito Santo é considerado:",
+      "alternativas": [
+        "Uma força divina",
+        "Uma energia",
+        "Uma pessoa da Trindade",
+        "Um anjo especial"
+      ],
+      "correta": 2,
+      "banca": "VUNESP",
+      "dificuldade": "Fácil",
+      "explicacao": "O Espírito Santo é a terceira pessoa da Trindade, co-igual ao Pai e ao Filho."
+    },
+    {
+      "id": 5,
+      "materia": "Cristologia",
+      "assunto": "Divindade",
+      "pergunta": "Qual dos seguintes títulos afirma a divindade de Cristo?",
+      "alternativas": ["Profeta", "Mestre", "Filho de Deus", "Rabi"],
+      "correta": 2,
+      "banca": "CESPE",
+      "dificuldade": "Médio",
+      "explicacao": "O título 'Filho de Deus' no contexto judaico afirmava igualdade com Deus."
+    }
+  ],
+
+  "temasRedacao": [
+    "A importância da pregação expositiva na igreja contemporânea",
+    "O papel do Espírito Santo na vida do crente",
+    "A relevância da hermenêutica para a interpretação bíblica",
+    "Os desafios da teologia no mundo pós-moderno",
+    "A autoridade das Escrituras na formação do caráter cristão",
+    "Cristologia: a centralidade de Cristo na fé cristã",
+    "A história da transmissão do texto bíblico",
+    "A arte de pregar: homilética para o século XXI",
+    "Missiologia: o chamado para pregar o evangelho",
+    "Teologia Pastoral: cuidando das ovelhas de Deus"
+  ]
+}

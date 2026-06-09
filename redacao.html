@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar Redação para IA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: linear-gradient(135deg, #1a4d8c 0%, #0e3a6b 100%); min-height: 100vh; display: flex; justify-content: center; align-items: center; padding: 1rem; }
+        .container { background: white; border-radius: 1.5rem; padding: 2rem; max-width: 700px; width: 100%; box-shadow: 0 20px 40px rgba(0,0,0,0.2); }
+        h2 { color: #1a4d8c; margin-bottom: 0.5rem; }
+        .tema { background: #e8f0fe; padding: 0.75rem; border-radius: 0.5rem; margin: 1rem 0; color: #1a4d8c; font-weight: 500; }
+        textarea { width: 100%; padding: 1rem; border: 1px solid #ddd; border-radius: 0.75rem; font-family: monospace; font-size: 0.9rem; margin: 1rem 0; background: #f8f9fa; }
+        .buttons { display: flex; gap: 1rem; flex-wrap: wrap; }
+        button { background: #1a4d8c; color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 0.75rem; cursor: pointer; font-weight: 600; flex: 1; }
+        button:hover { background: #0e3a6b; }
+        .info { margin-top: 1rem; font-size: 0.8rem; color: #666; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2><i class="fas fa-robot"></i> Corrigir Redação com IA</h2>
+        <div class="tema" id="temaDisplay">Carregando...</div>
+        <textarea id="promptText" rows="10" readonly></textarea>
+        <div class="buttons"><button onclick="copiarPrompt()">📋 Copiar Prompt</button><button onclick="abrirChatGPT()">🤖 Abrir ChatGPT</button></div>
+        <div class="info">📌 Copie o texto e cole no ChatGPT para correção.</div>
+    </div>
+    <script>
+        const dados = JSON.parse(localStorage.getItem('redacao_para_enviar') || '{}');
+        document.getElementById('temaDisplay').innerHTML = `<strong>Tema:</strong> ${dados.tema || 'Tema não identificado'}`;
+        document.getElementById('promptText').value = `Corrija esta redação sobre "${dados.tema || 'o tema'}":\n\n${dados.texto || ''}`;
+        function copiarPrompt() { navigator.clipboard.writeText(document.getElementById('promptText').value); alert('✅ Copiado!'); }
+        function abrirChatGPT() { window.open('https://chat.openai.com', '_blank'); }
+    </script>
+</body>
+</html>

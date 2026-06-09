@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Ekklesia Study | Plataforma Teológica</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- TELA DE BOAS-VINDAS / LOGIN OBRIGATÓRIO -->
+<div id="welcomeScreen" class="welcome-screen">
+    <div class="welcome-card">
+        <div class="welcome-icon">
+            <i class="fas fa-church"></i>
+        </div>
+        <h1>Bem-vindo ao Ekklesia Study</h1>
+        <p>Sua plataforma de estudos teológicos</p>
+        <button id="welcomeLoginBtn" class="btn-primary btn-large">
+            <i class="fab fa-google"></i> Entrar com Google
+        </button>
+        <button id="welcomeEmailBtn" class="btn-outline btn-large">
+            <i class="fas fa-envelope"></i> Entrar com E-mail
+        </button>
+        <p class="welcome-footer">Crie sua conta e acompanhe seu progresso</p>
+    </div>
+</div>
+
+<!-- MODAL DE LOGIN POR E-MAIL -->
+<div id="emailLoginModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Entrar com E-mail</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="emailLoginForm">
+                <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+                <input type="password" id="loginPassword" placeholder="Senha" required>
+                <button type="submit" class="btn-primary">Entrar</button>
+            </form>
+            <div class="divider">ou</div>
+            <button id="showRegisterBtn" class="btn-outline">Criar nova conta</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL DE CADASTRO -->
+<div id="registerModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Criar Conta</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <form id="registerForm">
+                <input type="text" id="registerName" placeholder="Nome completo" required>
+                <input type="email" id="registerEmail" placeholder="E-mail" required>
+                <input type="password" id="registerPassword" placeholder="Senha (mínimo 8 caracteres, letras e números)" required>
+                <input type="password" id="registerConfirmPassword" placeholder="Confirmar senha" required>
+                <button type="submit" class="btn-primary">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- APP PRINCIPAL (só aparece após login) -->
+<div id="appContainer" class="app-container" style="display: none;">
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-church"></i>
+            <span>Ekklesia<br><small>Study</small></span>
+        </div>
+        <nav class="nav-menu">
+            <div class="nav-item active" data-page="dashboard"><i class="fas fa-tachometer-alt"></i><span>Dashboard</span></div>
+            <div class="nav-item" data-page="cronograma"><i class="fas fa-calendar-alt"></i><span>Cronograma</span></div>
+            <div class="nav-item" data-page="conteudo"><i class="fas fa-book-open"></i><span>Conteúdo</span></div>
+            <div class="nav-item" data-page="questoes"><i class="fas fa-question-circle"></i><span>Questões</span></div>
+            <div class="nav-item" data-page="redacao"><i class="fas fa-pen-fancy"></i><span>Redação</span></div>
+            <div class="nav-item" data-page="estatisticas"><i class="fas fa-chart-line"></i><span>Estatísticas</span></div>
+        </nav>
+        <div class="user-info-sidebar">
+            <div class="user-avatar"><i class="fas fa-user-circle"></i></div>
+            <div class="user-details">
+                <span id="sidebarUserName">Carregando...</span>
+                <button id="logoutBtn" class="btn-logout">Sair</button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+        <header class="top-header">
+            <button class="menu-toggle" id="menuToggle"><i class="fas fa-bars"></i></button>
+            <h1 id="pageTitle">Dashboard</h1>
+            <div class="header-actions">
+                <button id="themeToggle" class="icon-btn"><i class="fas fa-moon"></i></button>
+                <div class="user-greeting">
+                    <i class="fas fa-smile-wink"></i>
+                    <span id="userGreeting">Olá, Visitante</span>
+                </div>
+            </div>
+        </header>
+        <div class="content-area" id="contentArea"></div>
+    </main>
+</div>
+
+<!-- MODAL PERSONALIZAR CRONOGRAMA -->
+<div id="personalizarModal" class="modal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>Personalizar Cronograma</h3>
+            <button class="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+            <label>📅 Data de início dos estudos</label>
+            <input type="date" id="dataInicio" value="2024-01-01">
+            <label>⏱️ Quantos dias por semana?</label>
+            <select id="cronoDiasPorSemana">
+                <option value="1">1 dia/semana</option><option value="2">2 dias/semana</option>
+                <option value="3">3 dias/semana</option><option value="4" selected>4 dias/semana</option>
+                <option value="5">5 dias/semana</option><option value="6">6 dias/semana</option>
+                <option value="7">7 dias/semana</option>
+            </select>
+            <label>📆 Quais dias da semana?</label>
+            <div id="diasSemanaCheckbox" class="dias-checkbox">
+                <label><input type="checkbox" value="0"> Dom</label>
+                <label><input type="checkbox" value="1"> Seg</label>
+                <label><input type="checkbox" value="2"> Ter</label>
+                <label><input type="checkbox" value="3"> Qua</label>
+                <label><input type="checkbox" value="4"> Qui</label>
+                <label><input type="checkbox" value="5"> Sex</label>
+                <label><input type="checkbox" value="6"> Sáb</label>
+            </div>
+            <div id="diasAlert" class="alert-error" style="display: none;"></div>
+            <label>⏰ Tempo por dia de estudo:</label>
+            <select id="cronoTempoPorDia">
+                <option value="30">30 minutos (1 matéria/dia)</option>
+                <option value="60" selected>1 hora (2 matérias/dia)</option>
+                <option value="90">1h30 (3 matérias/dia)</option>
+                <option value="120">2 horas (4 matérias/dia)</option>
+                <option value="150">2h30 (5 matérias/dia)</option>
+                <option value="180">3 horas (6 matérias/dia)</option>
+            </select>
+            <button id="salvarPersonalizacao" class="btn-primary">Salvar</button>
+        </div>
+    </div>
+</div>
+
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+<script src="firebase-config.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
