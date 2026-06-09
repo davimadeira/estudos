@@ -87,8 +87,7 @@ function handleUserLogin(user) {
     localStorage.setItem('currentUserId', user.uid);
     carregarProgresso();
     
-    document.getElementById('welcomeScreen').style.display = 'none';
-    document.getElementById('appContainer').style.display = 'flex';
+    updateUIBloqueio();
     
     document.getElementById('sidebarUserName').innerText = currentUser.name;
     document.getElementById('userGreeting').innerHTML = `<i class="fas fa-smile-wink"></i> Olá, ${currentUser.name.split(' ')[0]}`;
@@ -101,42 +100,52 @@ function logout() {
     auth.signOut();
     currentUser = null;
     localStorage.removeItem('currentUserId');
-    document.getElementById('welcomeScreen').style.display = 'flex';
-    document.getElementById('appContainer').style.display = 'none';
+    updateUIBloqueio();
 }
 
-function initAuth() {
-    const welcomeLoginBtn = document.getElementById('welcomeLoginBtn');
-    const welcomeEmailBtn = document.getElementById('welcomeEmailBtn');
-    const emailLoginForm = document.getElementById('emailLoginForm');
-    const showRegisterBtn = document.getElementById('showRegisterBtn');
-    const registerForm = document.getElementById('registerForm');
+function updateUIBloqueio() {
+    const overlay = document.getElementById('blockOverlay');
+    if (currentUser) {
+        if (overlay) overlay.style.display = 'none';
+        document.getElementById('appContainer').style.display = 'flex';
+    } else {
+        if (overlay) overlay.style.display = 'flex';
+        document.getElementById('appContainer').style.display = 'none';
+    }
+}
+
+function initOverlayButtons() {
+    const googleBtn = document.getElementById('blockLoginBtn');
+    const emailBtn = document.getElementById('blockEmailBtn');
     
-    if (welcomeLoginBtn) {
-        welcomeLoginBtn.onclick = async () => {
-            try {
-                const result = await auth.signInWithPopup(googleProvider);
-                handleUserLogin(result.user);
-            } catch (err) {
-                alert('Erro: ' + err.message);
-            }
+    if (googleBtn) {
+        googleBtn.onclick = () => {
+            auth.signInWithPopup(googleProvider)
+                .then(result => handleUserLogin(result.user))
+                .catch(err => alert('Erro: ' + err.message));
         };
     }
     
-    if (welcomeEmailBtn) {
-        welcomeEmailBtn.onclick = () => {
+    if (emailBtn) {
+        emailBtn.onclick = () => {
             document.getElementById('emailLoginModal').style.display = 'flex';
         };
     }
+}
+
+function initAuth() {
+    const submitLoginBtn = document.getElementById('submitLoginBtn');
+    const showRegisterBtn = document.getElementById('showRegisterBtn');
+    const submitRegisterBtn = document.getElementById('submitRegisterBtn');
     
-    if (emailLoginForm) {
-        emailLoginForm.onsubmit = async (e) => {
-            e.preventDefault();
+    if (submitLoginBtn) {
+        submitLoginBtn.onclick = async () => {
             const email = document.getElementById('loginEmail').value;
             const password = document.getElementById('loginPassword').value;
             try {
                 const result = await auth.signInWithEmailAndPassword(email, password);
                 handleUserLogin(result.user);
+                document.getElementById('emailLoginModal').style.display = 'none';
             } catch (err) {
                 alert('Erro: ' + err.message);
             }
@@ -145,14 +154,13 @@ function initAuth() {
     
     if (showRegisterBtn) {
         showRegisterBtn.onclick = () => {
-            document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
+            document.getElementById('emailLoginModal').style.display = 'none';
             document.getElementById('registerModal').style.display = 'flex';
         };
     }
     
-    if (registerForm) {
-        registerForm.onsubmit = async (e) => {
-            e.preventDefault();
+    if (submitRegisterBtn) {
+        submitRegisterBtn.onclick = async () => {
             const name = document.getElementById('registerName').value;
             const email = document.getElementById('registerEmail').value;
             const password = document.getElementById('registerPassword').value;
@@ -167,6 +175,7 @@ function initAuth() {
                 const result = await auth.createUserWithEmailAndPassword(email, password);
                 await result.user.updateProfile({ displayName: name });
                 handleUserLogin(result.user);
+                document.getElementById('registerModal').style.display = 'none';
             } catch (err) {
                 alert('Erro: ' + err.message);
             }
@@ -177,7 +186,8 @@ function initAuth() {
         btn.onclick = () => document.querySelectorAll('.modal').forEach(m => m.style.display = 'none');
     });
     
-    document.getElementById('logoutBtn').onclick = logout;
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) logoutBtn.onclick = logout;
 }
 
 // ==================== NAVEGAÇÃO ====================
@@ -519,119 +529,12 @@ async function init() {
     carregarProgresso();
     initNavigation();
     initAuth();
+    initOverlayButtons();
     
     const savedTheme = localStorage.getItem('tema');
     if (savedTheme === 'dark') document.body.classList.add('dark');
     
-    const userId = localStorage.getItem('currentUserId');
-    if (userId) {
-        auth.onAuthStateChanged(async (user) => {
-            if (user) {
-                currentUser = { uid: user.uid, name: user.displayName || user.email.split('@')[0], email: user.email };
-                document.getElementById('welcomeScreen').style.display = 'none';
-                document.getElementById('appContainer').style.display = 'flex';
-                carregarProgresso();
-                document.getElementById('sidebarUserName').innerText = currentUser.name;
-                document.getElementById('userGreeting').innerHTML = `<i class="fas fa-smile-wink"></i> Olá, ${currentUser.name.split(' ')[0]}`;
-                renderizarPagina('dashboard');
-            }
-        });
-    }
-}
-
-// Função para login com Google
-function fazerLoginGoogle() {
-    console.log('Login Google iniciado');
-    auth.signInWithPopup(googleProvider)
-        .then((result) => {
-            handleUserLogin(result.user);
-        })
-        .catch((error) => {
-            console.error('Erro:', error);
-            alert('Erro ao fazer login: ' + error.message);
-        });
-}
-
-// Função para abrir modal de email
-function abrirModalEmail() {
-    console.log('Abrindo modal de email');
-    const modal = document.getElementById('emailLoginModal');
-    if (modal) {
-        modal.style.display = 'flex';
-    } else {
-        console.error('Modal não encontrado');
-        alert('Erro ao abrir modal de login');
-    }
-}// Mostrar/Esconder overlay baseado no login
-function updateUIBloqueio() {
-    const overlay = document.getElementById('blockOverlay');
-    if (currentUser) {
-        if (overlay) overlay.style.display = 'none';
-        document.getElementById('appContainer').style.display = 'flex';
-    } else {
-        if (overlay) overlay.style.display = 'flex';
-        document.getElementById('appContainer').style.display = 'none';
-    }
-}
-
-// Configurar botões do overlay
-function initOverlayButtons() {
-    const googleBtn = document.getElementById('blockLoginBtn');
-    const emailBtn = document.getElementById('blockEmailBtn');
-    
-    if (googleBtn) {
-        googleBtn.onclick = () => {
-            auth.signInWithPopup(googleProvider)
-                .then(result => handleUserLogin(result.user))
-                .catch(err => alert('Erro: ' + err.message));
-        };
-    }
-    
-    if (emailBtn) {
-        emailBtn.onclick = () => {
-            document.getElementById('emailLoginModal').style.display = 'flex';
-        };
-    }
-}
-
-// Modificar o handleUserLogin para chamar updateUIBloqueio
-function handleUserLogin(user) {
-    currentUser = {
-        uid: user.uid,
-        name: user.displayName || user.email.split('@')[0],
-        email: user.email
-    };
-    localStorage.setItem('currentUserId', user.uid);
-    carregarProgresso();
-    
-    updateUIBloqueio(); // ← FECHA O OVERLAY
-    
-    document.getElementById('sidebarUserName').innerText = currentUser.name;
-    document.getElementById('userGreeting').innerHTML = `<i class="fas fa-smile-wink"></i> Olá, ${currentUser.name.split(' ')[0]}`;
-    
-    renderizarPagina('dashboard');
-}
-
-// Modificar logout
-function logout() {
-    auth.signOut();
-    currentUser = null;
-    localStorage.removeItem('currentUserId');
-    updateUIBloqueio(); // ← MOSTRA O OVERLAY DE NOVO
-}
-
-// Na função init(), chamar initOverlayButtons()
-async function init() {
-    await carregarDadosJSON();
-    carregarProgresso();
-    initNavigation();
-    initAuth();
-    initOverlayButtons(); // ← ADICIONE ESTA LINHA
-    
-    const savedTheme = localStorage.getItem('tema');
-    if (savedTheme === 'dark') document.body.classList.add('dark');
-    
-    updateUIBloqueio(); // ← ADICIONE ESTA LINHA
+    updateUIBloqueio();
     
     const userId = localStorage.getItem('currentUserId');
     if (userId) {
@@ -647,4 +550,5 @@ async function init() {
         });
     }
 }
+
 init();
