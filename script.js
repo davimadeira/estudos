@@ -1,6 +1,4 @@
-// ==================== EKKLESIA STUDY - SCRIPT COMPLETO ====================
-
-// ==================== VARIÁVEIS GLOBAIS ====================
+// ==================== SCRIPT FINAL ====================
 let db = {
     materias: [],
     conteudos: [],
@@ -13,12 +11,7 @@ let userProgress = {
     respostasQuestoes: [],
     tempoEstudoTotal: 0,
     redacoesFeitas: [],
-    cronoConfig: {
-        dataInicio: '2024-01-01',
-        diasSemana: [1, 2, 3, 4],
-        horasPorDia: 60,
-        diasPorSemana: 4
-    }
+    cronoConfig: { dataInicio: '2024-01-01', diasSemana: [1, 2, 3, 4], horasPorDia: 60, diasPorSemana: 4 }
 };
 
 let currentUser = null;
@@ -29,6 +22,17 @@ let currentQuestionPage = 1;
 const QUESTOES_POR_PAG = 5;
 let questoesFiltradas = [];
 let chartEvolucao = null;
+
+// ==================== VERIFICA LOGIN ====================
+function verificarLoginEAcao(acao) {
+    if (!currentUser) {
+        alert('🔒 Você precisa fazer login para acessar esta funcionalidade!');
+        document.getElementById('emailLoginModal').style.display = 'flex';
+        return false;
+    }
+    acao();
+    return true;
+}
 
 // ==================== CARREGAR DADOS ====================
 async function carregarDadosJSON() {
@@ -87,12 +91,13 @@ function handleUserLogin(user) {
     localStorage.setItem('currentUserId', user.uid);
     carregarProgresso();
     
-    updateUIBloqueio();
-    
     document.getElementById('sidebarUserName').innerText = currentUser.name;
     document.getElementById('userGreeting').innerHTML = `<i class="fas fa-smile-wink"></i> Olá, ${currentUser.name.split(' ')[0]}`;
     
-    renderizarPagina('dashboard');
+    document.getElementById('emailLoginModal').style.display = 'none';
+    document.getElementById('registerModal').style.display = 'none';
+    
+    renderizarPagina(currentPage);
     setTimeout(() => alert(`Bem-vindo(a) ${currentUser.name}!`), 100);
 }
 
@@ -100,43 +105,29 @@ function logout() {
     auth.signOut();
     currentUser = null;
     localStorage.removeItem('currentUserId');
-    updateUIBloqueio();
-}
-
-function updateUIBloqueio() {
-    const overlay = document.getElementById('blockOverlay');
-    if (currentUser) {
-        if (overlay) overlay.style.display = 'none';
-        document.getElementById('appContainer').style.display = 'flex';
-    } else {
-        if (overlay) overlay.style.display = 'flex';
-        document.getElementById('appContainer').style.display = 'none';
-    }
-}
-
-function initOverlayButtons() {
-    const googleBtn = document.getElementById('blockLoginBtn');
-    const emailBtn = document.getElementById('blockEmailBtn');
-    
-    if (googleBtn) {
-        googleBtn.onclick = () => {
-            auth.signInWithPopup(googleProvider)
-                .then(result => handleUserLogin(result.user))
-                .catch(err => alert('Erro: ' + err.message));
-        };
-    }
-    
-    if (emailBtn) {
-        emailBtn.onclick = () => {
-            document.getElementById('emailLoginModal').style.display = 'flex';
-        };
-    }
+    renderizarPagina(currentPage);
+    alert('Você saiu da plataforma.');
 }
 
 function initAuth() {
+    const blockLoginBtn = document.getElementById('blockLoginBtn');
+    const blockEmailBtn = document.getElementById('blockEmailBtn');
     const submitLoginBtn = document.getElementById('submitLoginBtn');
     const showRegisterBtn = document.getElementById('showRegisterBtn');
     const submitRegisterBtn = document.getElementById('submitRegisterBtn');
+    const welcomeLoginBtn = document.getElementById('welcomeLoginBtn');
+    const welcomeEmailBtn = document.getElementById('welcomeEmailBtn');
+    
+    const fazerLoginGoogle = () => {
+        auth.signInWithPopup(googleProvider).then(result => handleUserLogin(result.user)).catch(err => alert('Erro: ' + err.message));
+    };
+    
+    const abrirModalEmail = () => document.getElementById('emailLoginModal').style.display = 'flex';
+    
+    if (blockLoginBtn) blockLoginBtn.onclick = fazerLoginGoogle;
+    if (blockEmailBtn) blockEmailBtn.onclick = abrirModalEmail;
+    if (welcomeLoginBtn) welcomeLoginBtn.onclick = fazerLoginGoogle;
+    if (welcomeEmailBtn) welcomeEmailBtn.onclick = abrirModalEmail;
     
     if (submitLoginBtn) {
         submitLoginBtn.onclick = async () => {
@@ -145,7 +136,6 @@ function initAuth() {
             try {
                 const result = await auth.signInWithEmailAndPassword(email, password);
                 handleUserLogin(result.user);
-                document.getElementById('emailLoginModal').style.display = 'none';
             } catch (err) {
                 alert('Erro: ' + err.message);
             }
@@ -175,7 +165,6 @@ function initAuth() {
                 const result = await auth.createUserWithEmailAndPassword(email, password);
                 await result.user.updateProfile({ displayName: name });
                 handleUserLogin(result.user);
-                document.getElementById('registerModal').style.display = 'none';
             } catch (err) {
                 alert('Erro: ' + err.message);
             }
@@ -190,10 +179,15 @@ function initAuth() {
     if (logoutBtn) logoutBtn.onclick = logout;
 }
 
-// ==================== NAVEGAÇÃO ====================
+// ==================== NAVEGAÇÃO (COM VERIFICAÇÃO DE LOGIN) ====================
 function initNavigation() {
     document.querySelectorAll('.nav-item').forEach(item => {
         item.onclick = () => {
+            if (!currentUser) {
+                alert('🔒 Faça login para acessar o conteúdo!');
+                document.getElementById('emailLoginModal').style.display = 'flex';
+                return;
+            }
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             item.classList.add('active');
             renderizarPagina(item.dataset.page);
@@ -215,14 +209,7 @@ function initNavigation() {
 
 function renderizarPagina(page) {
     currentPage = page;
-    const titles = {
-        dashboard: 'Dashboard',
-        cronograma: 'Cronograma de Estudos',
-        conteudo: 'Biblioteca de Estudos',
-        questoes: 'Banco de Questões',
-        redacao: 'Prática de Redação',
-        estatisticas: 'Estatísticas de Desempenho'
-    };
+    const titles = { dashboard: 'Dashboard', cronograma: 'Cronograma', conteudo: 'Conteúdo', questoes: 'Questões', redacao: 'Redação', estatisticas: 'Estatísticas' };
     document.getElementById('pageTitle').innerText = titles[page] || 'Plataforma';
     
     if (page === 'dashboard') renderDashboard();
@@ -361,6 +348,7 @@ function mudarMes(delta) {
 }
 
 function abrirPersonalizar() {
+    if (!currentUser) { alert('🔒 Faça login para personalizar o cronograma!'); return; }
     document.getElementById('dataInicio').value = userProgress.cronoConfig.dataInicio;
     document.getElementById('cronoDiasPorSemana').value = userProgress.cronoConfig.diasPorSemana;
     document.querySelectorAll('#diasSemanaCheckbox input').forEach(cb => cb.checked = userProgress.cronoConfig.diasSemana.includes(parseInt(cb.value)));
@@ -395,7 +383,7 @@ function salvarPersonalizacaoCrono() {
 function renderConteudo() {
     let html = `<div class="card"><div class="card-title">📚 Matérias</div><div class="materias-grid">`;
     db.materias.forEach(mat => {
-        html += `<div class="materia-card" onclick="selecionarMateria('${mat}')"><i class="fas fa-graduation-cap"></i><div><strong>${mat}</strong></div></div>`;
+        html += `<div class="materia-card" onclick="verificarLoginEAcao(() => selecionarMateria('${mat}'))"><i class="fas fa-graduation-cap"></i><div><strong>${mat}</strong></div></div>`;
     });
     html += `</div></div><div id="aulasContainer"></div><div id="conteudoDetalhes"></div>`;
     document.getElementById('contentArea').innerHTML = html;
@@ -439,7 +427,7 @@ function renderizarListaQuestoes() {
             <div class="questao-card-moderno">
                 <div class="questao-header"><span>Questão ${q.id}</span><div class="questao-badges"><span class="badge badge-materia">${q.materia}</span><span class="badge badge-dificuldade">${q.dificuldade || 'Médio'}</span></div></div>
                 <div class="questao-enunciado">${q.pergunta}</div>
-                <div class="questao-alternativas">${q.alternativas.map((alt, idx) => `<div class="alternativa-item" onclick="responderQuestao(${q.id}, ${idx})"><span class="alternativa-letra">${String.fromCharCode(65 + idx)}</span><span>${alt}</span></div>`).join('')}</div>
+                <div class="questao-alternativas">${q.alternativas.map((alt, idx) => `<div class="alternativa-item" onclick="verificarLoginEAcao(() => responderQuestao(${q.id}, ${idx}))"><span class="alternativa-letra">${String.fromCharCode(65 + idx)}</span><span>${alt}</span></div>`).join('')}</div>
                 <div id="feedback-${q.id}" class="questao-feedback ${resposta ? (resposta.acertou ? 'feedback-correct' : 'feedback-wrong') : ''}" style="${resposta ? '' : 'display:none'}">${resposta ? (resposta.acertou ? '✅ Correto!' : `❌ Errado! Resposta: ${q.alternativas[q.correta]}`) : ''}</div>
             </div>
         `;
@@ -468,7 +456,7 @@ function responderQuestao(questaoId, alternativa) {
 function renderRedacao() {
     let html = `<div class="card"><div class="card-title">✍️ Temas de Redação</div><div class="temas-lista">`;
     db.temasRedacao.forEach(tema => {
-        html += `<div class="tema-item" onclick="abrirEditorRedacao('${tema.replace(/'/g, "\\'")}')"><span><i class="fas fa-pen"></i> ${tema}</span><span class="tema-status">📝 Disponível</span></div>`;
+        html += `<div class="tema-item" onclick="verificarLoginEAcao(() => abrirEditorRedacao('${tema.replace(/'/g, "\\'")}'))"><span><i class="fas fa-pen"></i> ${tema}</span><span class="tema-status">📝 Disponível</span></div>`;
     });
     html += `</div></div><div id="redacaoEditor" style="display: none;"></div>`;
     document.getElementById('contentArea').innerHTML = html;
@@ -523,18 +511,18 @@ window.responderQuestao = responderQuestao;
 window.abrirEditorRedacao = abrirEditorRedacao;
 window.fecharEditorRedacao = fecharEditorRedacao;
 window.enviarRedacao = enviarRedacao;
+window.verificarLoginEAcao = verificarLoginEAcao;
 
 async function init() {
     await carregarDadosJSON();
     carregarProgresso();
     initNavigation();
     initAuth();
-    initOverlayButtons();
     
     const savedTheme = localStorage.getItem('tema');
     if (savedTheme === 'dark') document.body.classList.add('dark');
     
-    updateUIBloqueio();
+    document.getElementById('appContainer').style.display = 'flex';
     
     const userId = localStorage.getItem('currentUserId');
     if (userId) {
@@ -542,12 +530,15 @@ async function init() {
             if (user) {
                 currentUser = { uid: user.uid, name: user.displayName || user.email.split('@')[0], email: user.email };
                 carregarProgresso();
-                updateUIBloqueio();
                 document.getElementById('sidebarUserName').innerText = currentUser.name;
                 document.getElementById('userGreeting').innerHTML = `<i class="fas fa-smile-wink"></i> Olá, ${currentUser.name.split(' ')[0]}`;
                 renderizarPagina('dashboard');
+            } else {
+                renderizarPagina('dashboard');
             }
         });
+    } else {
+        renderizarPagina('dashboard');
     }
 }
 
