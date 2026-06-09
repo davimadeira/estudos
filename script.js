@@ -562,5 +562,89 @@ function abrirModalEmail() {
         console.error('Modal não encontrado');
         alert('Erro ao abrir modal de login');
     }
+}// Mostrar/Esconder overlay baseado no login
+function updateUIBloqueio() {
+    const overlay = document.getElementById('blockOverlay');
+    if (currentUser) {
+        if (overlay) overlay.style.display = 'none';
+        document.getElementById('appContainer').style.display = 'flex';
+    } else {
+        if (overlay) overlay.style.display = 'flex';
+        document.getElementById('appContainer').style.display = 'none';
+    }
+}
+
+// Configurar botões do overlay
+function initOverlayButtons() {
+    const googleBtn = document.getElementById('blockLoginBtn');
+    const emailBtn = document.getElementById('blockEmailBtn');
+    
+    if (googleBtn) {
+        googleBtn.onclick = () => {
+            auth.signInWithPopup(googleProvider)
+                .then(result => handleUserLogin(result.user))
+                .catch(err => alert('Erro: ' + err.message));
+        };
+    }
+    
+    if (emailBtn) {
+        emailBtn.onclick = () => {
+            document.getElementById('emailLoginModal').style.display = 'flex';
+        };
+    }
+}
+
+// Modificar o handleUserLogin para chamar updateUIBloqueio
+function handleUserLogin(user) {
+    currentUser = {
+        uid: user.uid,
+        name: user.displayName || user.email.split('@')[0],
+        email: user.email
+    };
+    localStorage.setItem('currentUserId', user.uid);
+    carregarProgresso();
+    
+    updateUIBloqueio(); // ← FECHA O OVERLAY
+    
+    document.getElementById('sidebarUserName').innerText = currentUser.name;
+    document.getElementById('userGreeting').innerHTML = `<i class="fas fa-smile-wink"></i> Olá, ${currentUser.name.split(' ')[0]}`;
+    
+    renderizarPagina('dashboard');
+}
+
+// Modificar logout
+function logout() {
+    auth.signOut();
+    currentUser = null;
+    localStorage.removeItem('currentUserId');
+    updateUIBloqueio(); // ← MOSTRA O OVERLAY DE NOVO
+}
+
+// Na função init(), chamar initOverlayButtons()
+async function init() {
+    await carregarDadosJSON();
+    carregarProgresso();
+    initNavigation();
+    initAuth();
+    initOverlayButtons(); // ← ADICIONE ESTA LINHA
+    
+    const savedTheme = localStorage.getItem('tema');
+    if (savedTheme === 'dark') document.body.classList.add('dark');
+    
+    updateUIBloqueio(); // ← ADICIONE ESTA LINHA
+    
+    const userId = localStorage.getItem('currentUserId');
+    if (userId) {
+        auth.onAuthStateChanged(async (user) => {
+            if (user) {
+                currentUser = { uid: user.uid, name: user.displayName || user.email.split('@')[0], email: user.email };
+                carregarProgresso();
+                updateUIBloqueio();
+                document.getElementById('sidebarUserName').innerText = currentUser.name;
+                document.getElementById('userGreeting').innerHTML = `<i class="fas fa-smile-wink"></i> Olá, ${currentUser.name.split(' ')[0]}`;
+                renderizarPagina('dashboard');
+            }
+        });
+    }
 }
 init();
