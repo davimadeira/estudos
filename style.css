@@ -6,7 +6,6 @@
 }
 
 :root {
-    /* Cores principais */
     --primary: #1a4d8c;
     --primary-dark: #0e3a6b;
     --primary-light: #e8f0fe;
@@ -16,30 +15,20 @@
     --success: #2d6a4f;
     --warning: #e9c46a;
     --info: #4895ef;
-    
-    /* Cores de fundo */
     --bg-main: #f5f7fa;
     --bg-card: #ffffff;
     --bg-sidebar: #1a2a3a;
     --bg-hover: #eef2f7;
-    
-    /* Cores de texto */
     --text-primary: #1e293b;
     --text-secondary: #64748b;
     --text-light: #94a3b8;
     --text-white: #ffffff;
-    
-    /* Bordas */
     --border: #e2e8f0;
     --border-light: #f1f5f9;
-    
-    /* Sombras */
     --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
     --shadow-md: 0 4px 6px -1px rgba(0,0,0,0.1);
     --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1);
     --shadow-xl: 0 20px 25px -5px rgba(0,0,0,0.1);
-    
-    /* Espaçamentos */
     --radius-sm: 0.5rem;
     --radius-md: 0.75rem;
     --radius-lg: 1rem;
@@ -66,103 +55,7 @@ body {
     line-height: 1.5;
 }
 
-/* ========== TELA DE BOAS-VINDAS ========== */
-.welcome-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #1a4d8c 0%, #0e3a6b 100%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-}
-
-.welcome-card {
-    background: white;
-    padding: 3rem 2rem;
-    border-radius: var(--radius-xl);
-    text-align: center;
-    max-width: 450px;
-    width: 90%;
-    box-shadow: var(--shadow-xl);
-    animation: fadeInUp 0.6s ease;
-}
-
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.welcome-icon {
-    font-size: 4rem;
-    color: var(--primary);
-    margin-bottom: 1rem;
-}
-
-.welcome-card h1 {
-    font-size: 1.8rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
-}
-
-.welcome-card p {
-    color: var(--text-secondary);
-    margin-bottom: 2rem;
-}
-
-.btn-large {
-    padding: 0.875rem 1.5rem;
-    font-size: 1rem;
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-.btn-primary {
-    background: var(--primary);
-    color: white;
-    border: none;
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-primary:hover {
-    background: var(--primary-dark);
-    transform: translateY(-2px);
-}
-
-.btn-outline {
-    background: transparent;
-    border: 2px solid var(--primary);
-    color: var(--primary);
-    border-radius: var(--radius-md);
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.btn-outline:hover {
-    background: var(--primary-light);
-    transform: translateY(-2px);
-}
-
-.welcome-footer {
-    margin-top: 1.5rem;
-    font-size: 0.8rem;
-    color: var(--text-light);
-}
-
-/* ========== LAYOUT PRINCIPAL ========== */
+/* LAYOUT PRINCIPAL */
 .app-container {
     display: flex;
     min-height: 100vh;
@@ -354,7 +247,7 @@ body {
     padding: 2rem;
 }
 
-/* ========== CARDS ========== */
+/* CARDS */
 .card {
     background: var(--bg-card);
     border-radius: var(--radius-lg);
@@ -380,7 +273,7 @@ body {
     gap: 0.5rem;
 }
 
-/* ========== STATS GRID ========== */
+/* STATS GRID */
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -408,7 +301,7 @@ body {
     color: var(--primary);
 }
 
-/* ========== CRONOGRAMA ========== */
+/* CRONOGRAMA */
 .cronograma-container {
     background: var(--bg-card);
     border-radius: var(--radius-lg);
@@ -482,30 +375,7 @@ body {
     margin-bottom: 0.5rem;
 }
 
-.dia-conteudo {
-    font-size: 0.7rem;
-    padding: 0.3rem;
-    background: var(--bg-card);
-    border-radius: var(--radius-sm);
-    margin-bottom: 0.3rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.dia-conteudo:hover {
-    background: var(--primary-light);
-}
-
-.dia-conteudo input {
-    width: 14px;
-    height: 14px;
-    cursor: pointer;
-}
-
-/* ========== CONTEÚDO ========== */
+/* MATÉRIAS GRID */
 .materias-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -556,7 +426,7 @@ body {
     transform: translateX(8px);
 }
 
-/* ========== QUESTÕES ========== */
+/* QUESTÕES */
 .questao-card-moderno {
     background: var(--bg-card);
     border-radius: var(--radius-lg);
@@ -704,7 +574,7 @@ body {
     color: white;
 }
 
-/* ========== REDAÇÃO ========== */
+/* REDAÇÃO */
 .temas-lista {
     display: flex;
     flex-direction: column;
@@ -728,21 +598,12 @@ body {
     transform: translateX(4px);
 }
 
-.tema-item.bloqueado {
-    opacity: 0.6;
-    cursor: default;
-}
-
-.tema-item.bloqueado:hover {
-    transform: none;
-}
-
 .tema-status {
     font-size: 0.8rem;
     color: var(--success);
 }
 
-/* ========== MODAIS ========== */
+/* MODAIS */
 .modal {
     display: none;
     position: fixed;
@@ -763,10 +624,6 @@ body {
     max-width: 550px;
     max-height: 90vh;
     overflow-y: auto;
-}
-
-.modal-large .modal-content {
-    max-width: 900px;
 }
 
 .modal-header {
@@ -814,13 +671,6 @@ input:focus, select:focus, textarea:focus {
     margin: 0.5rem 0 1rem;
 }
 
-.dias-checkbox label {
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-    cursor: pointer;
-}
-
 .alert-error {
     background: #f8d7da;
     color: #721c24;
@@ -849,13 +699,7 @@ input:focus, select:focus, textarea:focus {
 .divider::before { left: 0; }
 .divider::after { right: 0; }
 
-.divider span {
-    background: var(--bg-card);
-    padding: 0 0.5rem;
-    color: var(--text-secondary);
-}
-
-/* VISUALIZAÇÃO CRONOGRAMA MODAL */
+/* VISUALIZAÇÃO CRONOGRAMA */
 .crono-view-buttons {
     display: flex;
     gap: 0.5rem;
@@ -876,43 +720,7 @@ input:focus, select:focus, textarea:focus {
     color: white;
 }
 
-/* RESPONSIVIDADE */
-@media (max-width: 768px) {
-    .menu-toggle {
-        display: block;
-    }
-    
-    .sidebar {
-        transform: translateX(-100%);
-    }
-    
-    .sidebar.open {
-        transform: translateX(0);
-    }
-    
-    .main-content {
-        margin-left: 0;
-    }
-    
-    .top-header {
-        padding-left: 1rem;
-    }
-    
-    .stats-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-    
-    .filters-bar {
-        flex-direction: column;
-    }
-    
-    .filter-select {
-        width: 100%;
-    }
-    
-    .materias-grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    }/* OVERLAY DE BLOQUEIO */
+/* OVERLAY DE BLOQUEIO */
 .block-overlay {
     position: fixed;
     top: 0;
@@ -952,4 +760,42 @@ input:focus, select:focus, textarea:focus {
     width: 100%;
     margin-bottom: 0.8rem;
 }
+
+/* RESPONSIVIDADE */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+    
+    .sidebar {
+        transform: translateX(-100%);
+    }
+    
+    .sidebar.open {
+        transform: translateX(0);
+    }
+    
+    .main-content {
+        margin-left: 0;
+    }
+    
+    .top-header {
+        padding-left: 1rem;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .filters-bar {
+        flex-direction: column;
+    }
+    
+    .filter-select {
+        width: 100%;
+    }
+    
+    .materias-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
 }
