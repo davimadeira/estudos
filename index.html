@@ -12,6 +12,7 @@
 <body>
 
 <!-- TELA DE BOAS-VINDAS / LOGIN OBRIGATÓRIO -->
+<!-- TELA DE BOAS-VINDAS / LOGIN OBRIGATÓRIO -->
 <div id="welcomeScreen" class="welcome-screen">
     <div class="welcome-card">
         <div class="welcome-icon">
@@ -19,12 +20,12 @@
         </div>
         <h1>Bem-vindo ao Ekklesia Study</h1>
         <p>Sua plataforma de estudos teológicos</p>
-        <button id="welcomeLoginBtn" class="btn-primary btn-large">
+        <button id="welcomeLoginBtn" class="btn-primary btn-large" onclick="fazerLoginGoogle()">
             <i class="fab fa-google"></i> Entrar com Google
         </button>
-       <button id="welcomeEmailBtn" class="btn-outline btn-large" onclick="console.log('Botão clicado!'); document.getElementById('emailLoginModal').style.display='flex'; console.log('Modal deve abrir agora');">
-    <i class="fas fa-envelope"></i> Entrar com E-mail
-</button>
+        <button id="welcomeEmailBtn" class="btn-outline btn-large" onclick="abrirModalEmail()">
+            <i class="fas fa-envelope"></i> Entrar com E-mail
+        </button>
         <p class="welcome-footer">Crie sua conta e acompanhe seu progresso</p>
     </div>
 </div>
