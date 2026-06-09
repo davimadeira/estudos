@@ -101,7 +101,21 @@
         <div class="content-area" id="contentArea"></div>
     </main>
 </div>
-
+<!-- OVERLAY DE BLOQUEIO PARA QUEM NÃO ESTÁ LOGADO -->
+<div id="blockOverlay" class="block-overlay" style="display: flex;">
+    <div class="block-card">
+        <i class="fas fa-lock" style="font-size: 4rem; color: #1a4d8c;"></i>
+        <h2>Acesso Restrito</h2>
+        <p>Você precisa estar logado para acessar o conteúdo da plataforma.</p>
+        <button id="blockLoginBtn" class="btn-primary btn-large">
+            <i class="fab fa-google"></i> Entrar com Google
+        </button>
+        <button id="blockEmailBtn" class="btn-outline btn-large">
+            <i class="fas fa-envelope"></i> Entrar com E-mail
+        </button>
+        <p class="welcome-footer">Crie sua conta e acompanhe seu progresso</p>
+    </div>
+</div>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
 <script src="firebase-config.js"></script>
